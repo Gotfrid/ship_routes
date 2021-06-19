@@ -19,7 +19,6 @@ function(input, output, session) {
 
     # update data on the map
     observe({
-        print(rv$data_to_display)
         map_proxy("map-map", rv$data_to_display)
     })
     

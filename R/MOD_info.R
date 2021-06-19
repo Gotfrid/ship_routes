@@ -33,6 +33,8 @@ info_server <- function(id, info_data) {
                 longest_segment <- info_data$line$distance
                 longest_segment <- format(round(longest_segment, 1), big.mark = " ")
                 
+                total_observations <- info_data$total_obs
+                
                 weight <- info_data$weight
                 weight <- format(weight, big.mark = " ")
                 
@@ -42,12 +44,11 @@ info_server <- function(id, info_data) {
                 ship_id <- info_data$ship_id
                 
                 flag <- info_data$flag
-                flag <- tolower(flag)
                 
                 flag_icon <- tags$img(
                     src = paste0(
                         "https://raw.githubusercontent.com/lipis/flag-icon-css/master/flags/1x1/",
-                        flag,
+                        tolower(flag),
                         ".svg"
                     ),
                     alt = flag,
@@ -55,7 +56,6 @@ info_server <- function(id, info_data) {
                     height = '25px',
                     style = "border: 1px solid gray;"
                 )
-                flag_icon <- as.character(flag_icon)
                 
                 card(class = "fluid", div(
                     class = "content",
@@ -71,8 +71,8 @@ info_server <- function(id, info_data) {
                     ),
                     div(
                         class = "meta",
-                        HTML(flag_icon),
-                        info_data$type
+                        flag_icon,
+                        paste0(info_data$type, ", ", flag)
                     ),
                     div(
                         class = "description",
@@ -83,6 +83,9 @@ info_server <- function(id, info_data) {
                             "Longest Segment: <strong>",
                             longest_segment,
                             "</strong>m</br>",
+                            "<small><em>Based on",
+                            total_observations,
+                            "unique points</em></small></br>",
                             "<hr>",
                             "Dead Weight: ",
                             weight,

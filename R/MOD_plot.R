@@ -42,8 +42,8 @@ plot_server <- function(id, plot_data) {
                              nameLocation = "center",
                              nameGap = 30) %>% 
                     e_grid(left = 50,
-                           right = 50,
-                           top = 30)
+                           right = 60,
+                           top = 50)
             })
         }
     )
