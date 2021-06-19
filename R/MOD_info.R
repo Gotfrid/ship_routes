@@ -77,28 +77,30 @@ info_server <- function(id, info_data) {
                     div(
                         class = "description",
                         HTML(
-                            "Total Distance Travelled: <strong>",
+                            "Total Distance Travelled: ", "<strong>",
                             total_distance,
                             "</strong>m</br>",
-                            "Longest Segment: <strong>",
+                            "Longest Segment: ", "<strong>",
                             longest_segment,
                             "</strong>m</br>",
-                            "<small><em>Based on",
+                            "<small><em>",
+                            "Based on",
                             total_observations,
-                            "unique points</em></small></br>",
+                            "unique points",
+                            "</em></small></br>",
                             "<hr>",
-                            "Dead Weight: ",
+                            "Dead Weight", ": ",
                             weight,
                             "kg</br>",
-                            "Length: ",
+                            "Length", ": ",
                             length,
                             "m</br>",
-                            "Width: ",
+                            "Width", ": ",
                             width,
                             "m</br>",
                         )
-                    )
-                ))
+                    ))
+                )
             })
         }
     )

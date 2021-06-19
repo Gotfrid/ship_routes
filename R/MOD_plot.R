@@ -16,8 +16,10 @@ plot_server <- function(id, plot_data) {
                     return()
                 }
                 
-                max_segment_datetime <- plot_data$max_segment_datetime
-                max_segment_datetime <- as.POSIXct(max_segment_datetime, origin = "1970-01-01")
+                max_segment_datetime <- as.POSIXct(
+                    plot_data$max_segment_datetime,
+                    origin = "1970-01-01"
+                )
                 
                 plot_data$plot_data %>% 
                     as.data.frame() %>% 
@@ -40,7 +42,8 @@ plot_server <- function(id, plot_data) {
                     e_x_axis(type = "time",
                              name = "DateTime",
                              nameLocation = "center",
-                             nameGap = 30) %>% 
+                             nameGap = 30,
+                             axisLabel = list(rotate = 30)) %>% 
                     e_grid(left = 50,
                            right = 60,
                            top = 50)
