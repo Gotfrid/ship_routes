@@ -1,8 +1,7 @@
 shinyUI(
     semanticPage(
-        title = "The Baltice Marine App",
+        title = "The Baltic Marine App",
         margin = "50px",
-        
         grid(
             grid_template = myGridTemplate,
             id = "main_grid", 
