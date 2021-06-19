@@ -4,7 +4,9 @@ map_proxy <- function(id, map_data) {
     if (map_data$status == "fail") {
         map <- leafletProxy(id) %>%
             clearMarkers() %>%
-            clearShapes()
+            clearShapes() %>%
+            clearControls() %>%
+            clearMarkerClusters()
         return(map)
     }
     

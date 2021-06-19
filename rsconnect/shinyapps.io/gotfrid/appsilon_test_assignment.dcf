@@ -5,9 +5,9 @@ account: gotfrid
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 4291839
-bundleId: 4733837
+bundleId: 4733970
 url: https://gotfrid.shinyapps.io/appsilon_test_assignment/
-when: 1624105275.14824
+when: 1624109125.26023
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: data/ships.csv|data/ships.rds|www/style.css|www/title_image.jpg
+ignoredFiles: data/ships.csv|www/title_image.jpg

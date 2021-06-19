@@ -17,7 +17,8 @@ function(input, output, session) {
     # create the map
     map_server(id = "map")
 
-    # update data on the map
+    # update data on the map: i was not sure that the map is not recreated everytime
+    # so i moved proxy to separate function
     observe({
         map_proxy("map-map", rv$data_to_display)
     })
