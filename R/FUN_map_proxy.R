@@ -8,12 +8,36 @@ map_proxy <- function(id, map_data) {
         return(map)
     }
     
+    # decide, if there are too many points to display
+    if (length(map_data$map_points$lng) > 150) {
+        cluster_disable_zoom <- 15
+    } else {
+        cluster_disable_zoom <- 1
+    }
+    
+    # points of start and end of the longest segment
     points <- st_coordinates(map_data$points)
     points <- points + matrix(c(0,  0, 0.03, -0.03), nrow = 2)
 
+    pal <- colorNumeric("RdYlGn", map_data$map_points$datetime)
+    
     map <- leafletProxy(id) %>%
         clearMarkers() %>%
         clearShapes() %>%
+        clearControls() %>% 
+        clearMarkerClusters() %>% 
+        addCircleMarkers(data = map_data$map_points,
+                         lng = ~lng,
+                         lat = ~lat,
+                         color = "#2d2d2d",
+                         opacity = 0.6,
+                         fillColor = ~pal(datetime),
+                         fillOpacity = 0.1,
+                         weight = 0.5,
+                         clusterOptions = markerClusterOptions(
+                             disableClusteringAtZoom = cluster_disable_zoom
+                        )
+        ) %>% 
         addMarkers(data = map_data$points,
                    label = ~label,
                    labelOptions = labelOptions(
@@ -33,7 +57,12 @@ map_proxy <- function(id, map_data) {
         fitBounds(points[1,1],
                   points[1,2],
                   points[2,1],
-                  points[2,2])
+                  points[2,2]) %>% 
+        addLegend(pal = pal,
+                  values = map_data$map_points$datetime,
+                  position = "bottomright",
+                  title = "DateTime",
+                  labFormat = myLabelFormat(dates=TRUE))
     
     return(map)
 }
