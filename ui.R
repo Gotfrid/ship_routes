@@ -5,7 +5,7 @@ shinyUI(
         grid(
             grid_template = myGridTemplate,
             id = "main_grid", 
-            title = h1("Marine Vessels of the Baltic Sea"),
+            title = h1("Marine Vessels and Their Routes in the Baltic Water Area"),
             selection = dropdownSelect_ui("dropdown_menus"),
             blank_space = p(),
             vertical_separation = p(),
