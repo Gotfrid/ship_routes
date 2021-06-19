@@ -38,25 +38,29 @@ dropdownSelect_server <- function(id) {
     moduleServer(
         id = id,
         module = function(input, output, session) {
-            local_reactive_values <- reactiveValues()
+            # local_reactive_values <- reactiveValues()
+            
+            name_options <- reactive({
+                vessel_by_type %>%
+                    filter(ship_type == input$type_selection) %>%
+                    pull(ship_name)
+            })
             
             observeEvent(input$type_selection, {
-                input$type_selection
-                local_reactive_values$type_selection <- input$type_selection
-                local_reactive_values$name_selection <- input$name_selection
-                # print(type_selection)
+                # local_reactive_values$type_selection <- input$type_selection
+                # local_reactive_values$name_selection <- input$name_selection
 
                 name_options <- vessel_by_type %>%
                     filter(ship_type == input$type_selection) %>%
                     pull(ship_name)
+                
                 updateSelectInput(
                         session = session,
                         inputId = "name_selection",
-                        choices = name_options)
-
+                        choices = name_options())
             })
             
-            return(local_reactive_values)
+            # return(local_reactive_values)
         }
     )
 }

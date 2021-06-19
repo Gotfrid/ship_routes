@@ -5,8 +5,9 @@ get_data <- function(type, name) {
         return()
     }
     
-    # this is a workaround, when type is changed, but the name is still from old type
-    # and DB gets an apriori wrong query 
+    # this is a workaround, when type is changed, 
+    # but the name is still from old type
+    # and DB gets a wrong query for unexisting data
     applicable_names <- vessel_by_type %>%
         filter(ship_type == type) %>%
         pull(ship_name)

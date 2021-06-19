@@ -64,7 +64,7 @@ map_proxy <- function(id, map_data) {
                   values = map_data$map_points$datetime,
                   position = "bottomright",
                   title = "DateTime",
-                  labFormat = myLabelFormat(dates=TRUE))
+                  labFormat = myLabelFormat(dates = TRUE))
     
     return(map)
 }
