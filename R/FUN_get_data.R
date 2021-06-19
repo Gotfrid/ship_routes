@@ -17,17 +17,13 @@ get_data <- function(type, name) {
     
     # get the data from local DB
     s <- get_db_data(
-        db_path = "data/DB.db",
-        sql = "select * from ships where ship_type = ? and SHIPNAME = ?",
-        variables = list(type, name)
+            db_path = "data/DB.db",
+            sql = "select * from ships where ship_type = ? and SHIPNAME = ?",
+            variables = list(type, name)
     )
     
     if (nrow(s) < 2) {
         return(list(status = "fail"))
-        # leafletProxy("map-map") %>% 
-        #     clearMarkers() %>% 
-        #     clearShapes() 
-        
     }
     
     geo <- s %>%
@@ -35,7 +31,7 @@ get_data <- function(type, name) {
         st_as_sf(coords = c("LON", "LAT"), crs = 4326)
     
     lines <- geo %>% 
-        group_by(date) %>%
+        # group_by(date) %>%
         summarise(avg_speed = mean(SPEED, na.rm = TRUE), do_union = FALSE) %>%
         st_cast("LINESTRING") %>%
         # make sure only true lines stay
@@ -51,7 +47,7 @@ get_data <- function(type, name) {
         # there are problems in data: great distance in same day
         filter(distance < 10000) %>% 
         filter(distance == max(distance)) %>% 
-        # data is pre-sorted by datetime
+        # data is pre-sorted by datetime, so i pick the last element
         tail(n = 1)
     
     points <- suppressWarnings(st_cast(longest_segment, "POINT"))
@@ -72,6 +68,7 @@ get_data <- function(type, name) {
             line = longest_segment,
             points = points,
             total_distance = total_distance,
+            total_obs = nrow(geo),
             ship_id = s$SHIP_ID[1],
             width = s$WIDTH[1],
             length = s$LENGTH[1],
@@ -82,6 +79,11 @@ get_data <- function(type, name) {
                 datetime = s$DATETIME,
                 speed = s$SPEED,
                 course = s$COURSE
+            ),
+            map_points = list(
+                lng = s$LON,
+                lat = s$LAT,
+                datetime = s$DATETIME
             ),
             status = "ok"
         )
