@@ -25,7 +25,7 @@ dropdownSelect_ui <- function(id) {
     inputId = ns("name_selection"),
     label = "Vessel Name",
     choices = name_options,
-    selected = "PALLAS GLORY",
+    selected = "PACIFIC",
     multiple = FALSE,
     width = "300px"
   )
@@ -49,13 +49,16 @@ dropdownSelect_server <- function(id) {
         ]
       })
 
-      observeEvent(input$type_selection, {
-        updateSelectInput(
-          session = session,
-          inputId = "name_selection",
-          choices = name_options()
-        )
-      })
+      observeEvent(input$type_selection,
+        ignoreInit = TRUE,
+        {
+          updateSelectInput(
+            session = session,
+            inputId = "name_selection",
+            choices = name_options()
+          )
+        }
+      )
     }
   )
 }
