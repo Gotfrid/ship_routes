@@ -1,5 +1,12 @@
 function(input, output, session) {
 
+  # start tutorial
+  guide$init()$start()
+
+  observeEvent(input$help, {
+    guide$init()$start()
+  })
+
   # init reactive values
   rv <- reactiveValues()
 
@@ -26,13 +33,13 @@ function(input, output, session) {
   # update infographics
   observe({
     req(rv$data_to_display)
-    
+
     # post information in infobox
     info_server(
       id = "info_box",
       info_data = rv$data_to_display
     )
-    
+
     # draw a plot
     plot_server("plot", rv$data_to_display)
   })

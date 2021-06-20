@@ -2,6 +2,7 @@ library(shiny)
 library(shiny.semantic) # beautiful UI
 library(shinycustomloader) # animate map on start-up
 library(shinybusy) # show spinner for calculations
+library(cicerone) # tutorial through the app
 library(leaflet) # interactive map
 library(dplyr) # data manipulations
 library(DBI) # connect to local database
