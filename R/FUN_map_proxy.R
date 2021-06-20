@@ -9,40 +9,47 @@ map_proxy <- function(id, map_data) {
     return(map)
   }
 
-  # decide, if there are too many points to display
-  if (length(map_data$map_points$lng) > 150) {
-    cluster_disable_zoom <- 15
-  } else {
-    cluster_disable_zoom <- 1
-  }
-
   # points of start and end of the longest segment
   points <- st_coordinates(map_data$points)
-  points <- points + matrix(c(0, 0, 0.03, -0.03), nrow = 2)
 
-  pal <- colorNumeric("RdYlGn", map_data$map_points$datetime)
+  # route points - resampled for better performance
+  df <- as.data.frame(map_data$map_points)
+  df_poits <- df %>%
+    filter(
+      lng %in% points[, "X"],
+      lat %in% points[, "Y"]
+    )
+
+  if (nrow(df) > 500) {
+    df <- df %>%
+      sample_n(size = 500, replace = FALSE) %>%
+      arrange(datetime) %>%
+      bind_rows(df_poits) %>%
+      unique()
+  }
+
+  # color palette for route points
+  pal <- colorNumeric("RdYlGn", df$datetime)
+
+  # small trick for better initial zoom
+  points <- points + matrix(c(0, 0, 0.03, -0.03), nrow = 2)
 
   map <- leafletProxy(id) %>%
     clearMarkers() %>%
     clearShapes() %>%
     clearMarkerClusters() %>%
     addCircleMarkers(
-      data = map_data$map_points,
+      data = df,
       lng = ~lng,
       lat = ~lat,
+      label = ~ as.POSIXct(datetime, origin = "1970-01-01"),
+      labelOptions = labelOptions(textsize = "12px"),
       radius = 5,
       color = "#2d2d2d",
       opacity = 0.6,
       fillColor = ~ pal(datetime),
       fillOpacity = 0.3,
-      weight = 0.5,
-      clusterOptions = markerClusterOptions(
-        disableClusteringAtZoom = cluster_disable_zoom,
-        spiderfyOnMaxZoom = FALSE,
-        removeOutsideVisibleBounds = TRUE,
-        maxClusterRadius = 1,
-        singleMarkerMode = FALSE
-      )
+      weight = 0.5
     ) %>%
     addMarkers(
       data = map_data$points,
