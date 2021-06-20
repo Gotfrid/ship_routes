@@ -1,4 +1,5 @@
-# Ship Routes: Appsilon Test Assignment
-This is my Shiny application, created for a test assignment for an external R/Shiny Developer position at Appsilon.
+# Ship Routes: Interactive R/Shiny App
+This repo hosts codebase for the R/Shiny application dedicated to visualizing marine vessels' routes in the Baltic Sea (and a little beyond).
 
-Here is <a href="https://gotfrid.shinyapps.io/appsilon_test_assignment" target="_blank">deployed application</a>.
+Feel free to download it and run/test locally.\
+Or take a look at the <a href="https://gotfrid.shinyapps.io/appsilon_test_assignment" target="_blank">deployed version</a>.
