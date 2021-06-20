@@ -29,7 +29,7 @@ expected_html <-
       <em data-emoji="flag_pl"></em>
       Cargo, PL
     </div>
-    <div class="description">Total Distance Travelled:  <strong> 100 </strong>m</br> Longest Segment:  <strong> 50 </strong>m</br> <small><em> Based on 2 unique points </em></small></br> <hr> Dead Weight :  NULL kg</br> Length :  2 m</br> Width :  3 m</br></div>
+    <div class="description">Travelled:  <strong> 100 </strong>m</br> Longest Segment:  <strong> 50 </strong>m</br> <small><em> Based on 2 unique points </em></small></br> <hr> Dead Weight:  NULL kg</br> Length:  2 m</br> Width:  3 m</br></div>
   </div>
 </div>'
 

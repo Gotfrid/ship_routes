@@ -68,7 +68,7 @@ info_server <- function(id, info_data) {
             div(
               class = "description",
               HTML(
-                "Total Distance Travelled: ",
+                "Travelled: ",
                 "<strong>", total_distance, "</strong>m</br>",
                 "Longest Segment: ",
                 "<strong>", longest_segment, "</strong>m</br>",

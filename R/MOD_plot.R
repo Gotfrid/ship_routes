@@ -2,7 +2,7 @@ library(shiny)
 
 plot_ui <- function(id) {
   ns <- NS(id)
-  echarts4r::echarts4rOutput(ns("plot"))
+  echarts4rOutput(ns("plot"), height = "279px", width = "100%")
 }
 
 plot_server <- function(id, plot_data) {
@@ -16,47 +16,30 @@ plot_server <- function(id, plot_data) {
           return()
         }
 
-        max_segment_datetime <- as.POSIXct(
-          plot_data$max_segment_datetime,
-          origin = "1970-01-01"
-        ) %>% 
-          as.numeric()
 
-        plot_data$plot_data %>%
-          as.data.frame() %>%
-          mutate(datetime = as.numeric(as.POSIXct(datetime, origin = "1970-01-01"))) %>%
-          e_chart(datetime) %>%
-          e_line(speed,
-            symbol = "none",
-            connectNulls = "false"
-          ) %>%
-          e_mark_line(
-            data = list(name = "MAX", xAxis = max_segment_datetime),
-            silent = TRUE,
-            symbol = "circle",
-            lineStyle = list(color = "indianred"),
-            label = list(formatter = "Longest Segment\noccured here"),
-            animationDelay = 1000
-          ) %>%
-          e_tooltip(trigger = "axis") %>%
+        df <- as.data.frame(plot_data$plot_data) %>%
+          mutate(date = as.character(as.Date.POSIXct(datetime))) %>%
+          group_by(date) %>%
+          tally()
+
+        df %>%
+          e_chart(date) %>%
+          e_bar(n, name = "N") %>%
+          e_tooltip(trigger = "item") %>%
           e_legend(show = F) %>%
-          e_y_axis(
-            name = "Speed, knots",
-            nameLocation = "center",
-            nameGap = 30
-          ) %>%
           e_x_axis(
-            type = "time",
-            name = "DateTime",
+            type = "category",
+            name = "Date",
             nameLocation = "center",
             nameGap = 30,
-            axisLabel = list(rotate = 30)
+            axisLabel = list(rotate = 0)
           ) %>%
           e_grid(
-            left = 50,
-            right = 60,
+            left = 45,
+            right = 10,
             top = 50
-          )
+          ) %>%
+          e_color("#0079c9")
       })
     }
   )
