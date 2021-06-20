@@ -40,3 +40,6 @@ vignettes/*.pdf
 
 # ignore initial dataset
 data/ships.csv
+
+# rsconnet
+rsconnect
