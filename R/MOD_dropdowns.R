@@ -45,7 +45,7 @@ dropdownSelect_server <- function(id) {
       name_options <- reactive({
         vessel_by_type[
           vessel_by_type$ship_type == input$type_selection,
-          "ship_name"
+          ship_name
         ]
       })
 
