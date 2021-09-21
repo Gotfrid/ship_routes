@@ -14,7 +14,7 @@ library(echarts4r) # interactive viz
 # prepare initial select options
 vessel_by_type <- readRDS("data/vessel_by_type.RDS")
 type_options <- unique(vessel_by_type$ship_type)
-name_options <- vessel_by_type[vessel_by_type$ship_type == "Tanker", "ship_name"]
+name_options <- vessel_by_type[vessel_by_type$ship_type == "Tanker", ship_name]
 
 # page grid
 myGridTemplate <- grid_template(
